@@ -36,9 +36,9 @@ LogService.info("index", "Bot starting...");
     }
 
     // Now create the client
-    // const client = new MatrixClient(config.homeserverUrl, config.accessToken, storage, cryptoStore);
     const auth = new MatrixAuth(config.homeserverUrl);
-    const client = await auth.passwordLogin(config.userId, config.userPassword, config.deviceName);    
+    const session = await auth.passwordLogin(config.userId, config.userPassword, config.deviceName);   
+    const client = new MatrixClient(session.homeserverUrl, session.accessToken, storage, cryptoStore); 
 
     // Setup the autojoin mixin (if enabled)
     if (config.autoJoin) {
