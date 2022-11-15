@@ -2,6 +2,7 @@ import {
     AutojoinRoomsMixin, ICryptoStorageProvider,
     LogLevel,
     LogService,
+    MatrixAuth,
     MatrixClient,
     PantalaimonClient,
     RichConsoleLogger, RustSdkCryptoStorageProvider,
@@ -23,7 +24,6 @@ LogService.muteModule("Metrics");
 // Print something so we know the bot is working
 LogService.info("index", "Bot starting...");
 
-
 // This is the startup closure where we give ourselves an async context
 (async function () {
     // Prepare the storage system for the bot
@@ -36,7 +36,9 @@ LogService.info("index", "Bot starting...");
     }
 
     // Now create the client
-    const client = new MatrixClient(config.homeserverUrl, config.accessToken, storage, cryptoStore);
+    // const client = new MatrixClient(config.homeserverUrl, config.accessToken, storage, cryptoStore);
+    const auth = new MatrixAuth(config.homeserverUrl);
+    const client = await auth.passwordLogin(config.userId, config.userPassword, config.deviceName);    
 
     // Setup the autojoin mixin (if enabled)
     if (config.autoJoin) {

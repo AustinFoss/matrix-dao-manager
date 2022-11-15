@@ -15,3 +15,9 @@ dataPath: "storage"
 # Set to false to disable encryption support. Encrypted data will be
 # stored under dataPath.
 encryption: true
+
+userId: "@foobar:domain.com"
+
+userPassword: "password"
+
+deviceName: "device"
